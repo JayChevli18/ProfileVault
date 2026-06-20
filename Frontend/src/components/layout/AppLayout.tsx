@@ -1,6 +1,11 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { getApiErrorMessage } from "@/types/api";
 import { useAuth } from "@/providers/AuthProvider";
+import { logoutUser } from "@/services/auth.service";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard" },
@@ -8,7 +13,22 @@ const navItems = [
 ];
 
 export function AppLayout() {
-  const { user } = useAuth();
+  const navigate = useNavigate();
+  const { user, clearSession } = useAuth();
+
+  const logoutMutation = useMutation({
+    mutationFn: logoutUser,
+    onSuccess: () => {
+      clearSession();
+      toast.success("Logged out successfully");
+      navigate("/login", { replace: true });
+    },
+    onError: (error) => {
+      clearSession();
+      toast.error(getApiErrorMessage(error, "Logout failed"));
+      navigate("/login", { replace: true });
+    },
+  });
 
   return (
     <div className="min-h-svh bg-background">
@@ -37,8 +57,18 @@ export function AppLayout() {
             ))}
           </nav>
 
-          <div className="text-sm text-muted-foreground">
-            {user?.username}
+          <div className="flex items-center gap-3">
+            <span className="hidden text-sm text-muted-foreground sm:inline">
+              {user?.username}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => logoutMutation.mutate()}
+              disabled={logoutMutation.isPending}
+            >
+              {logoutMutation.isPending ? "Logging out..." : "Logout"}
+            </Button>
           </div>
         </div>
       </header>
