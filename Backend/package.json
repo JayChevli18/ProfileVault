@@ -1,0 +1,38 @@
+{
+  "name": "profile-vault-backend",
+  "version": "1.0.0",
+  "description": "ProfileVault Backend API",
+  "main": "dist/src/index.js",
+  "scripts": {
+    "build": "tsc && tsc-alias",
+    "dev": "tsx watch src/index.ts",
+    "start": "node dist/src/index.js",
+    "verify:storage": "tsx scripts/verify-storage.ts",
+    "verify:database": "tsx scripts/verify-database.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/blob": "^0.27.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.12.1",
+    "morgan": "^1.10.0",
+    "winston": "^3.17.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.8",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/morgan": "^1.9.9",
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "tsc-alias": "^1.8.10",
+    "typescript": "^5.8.2"
+  }
+}
