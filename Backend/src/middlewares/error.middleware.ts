@@ -1,6 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
+import multer from "multer";
 import { HTTP_STATUS } from "@/constants/http-status";
+import { MAX_FILE_SIZE_BYTES } from "@/constants/file.constants";
 import { env } from "@/config/env";
 import { logger } from "@/config/logger";
 import { AppError } from "@/utils/AppError";
@@ -17,6 +19,24 @@ function handleMongooseValidationError(error: mongoose.Error.ValidationError): A
     "Validation failed",
     errors
   );
+}
+
+function handleMulterError(error: multer.MulterError): AppError {
+  if (error.code === "LIMIT_FILE_SIZE") {
+    return new AppError(
+      HTTP_STATUS.BAD_REQUEST,
+      `File size cannot exceed ${MAX_FILE_SIZE_BYTES / (1024 * 1024)} MB`
+    );
+  }
+
+  if (error.code === "LIMIT_UNEXPECTED_FILE") {
+    return new AppError(
+      HTTP_STATUS.BAD_REQUEST,
+      'Unexpected field. Use "file" as the form field name'
+    );
+  }
+
+  return new AppError(HTTP_STATUS.BAD_REQUEST, error.message);
 }
 
 function handleMongooseDuplicateKeyError(error: {
@@ -45,6 +65,8 @@ export function errorHandler(
 
   if (error instanceof AppError) {
     appError = error;
+  } else if (error instanceof multer.MulterError) {
+    appError = handleMulterError(error);
   } else if (error instanceof mongoose.Error.ValidationError) {
     appError = handleMongooseValidationError(error);
   } else if (

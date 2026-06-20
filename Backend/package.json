@@ -11,7 +11,8 @@
     "verify:storage": "tsx scripts/verify-storage.ts",
     "verify:database": "tsx scripts/verify-database.ts",
     "verify:auth": "tsx scripts/verify-auth.ts",
-    "verify:profile": "tsx scripts/verify-profile.ts"
+    "verify:profile": "tsx scripts/verify-profile.ts",
+    "verify:upload": "tsx scripts/verify-upload.ts"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +27,7 @@
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.1",
+    "multer": "^1.4.5-lts.2",
     "morgan": "^1.10.0",
     "winston": "^3.17.0",
     "zod": "^3.24.2"
@@ -36,6 +38,7 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/multer": "^1.4.12",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.13.10",
     "tsx": "^4.19.3",
