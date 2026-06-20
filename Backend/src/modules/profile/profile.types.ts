@@ -37,3 +37,26 @@ export type ProfileCreateInput = Omit<
 export type ProfileUpdateInput = Partial<
   Omit<IProfile, "userId" | "documents" | "createdAt" | "updatedAt">
 >;
+
+export interface ProfileDocumentResponse {
+  id: string;
+  storageType: StorageTypeValue;
+  originalName: string;
+  mimeType: AllowedMimeType;
+  size: number;
+  url: string;
+  uploadedAt: Date;
+}
+
+export interface ProfileResponse {
+  id: string;
+  userId: string;
+  fullName: string;
+  dob: Date;
+  email: string;
+  mobile: string;
+  address: string;
+  documents: ProfileDocumentResponse[];
+  createdAt: Date;
+  updatedAt: Date;
+}

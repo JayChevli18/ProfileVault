@@ -2,3 +2,4 @@ export { AppError, BadRequestError, ConflictError, NotFoundError, UnauthorizedEr
 export { errorResponse, successResponse } from "@/utils/api-response";
 export type { ApiErrorResponse, ApiResponse, ApiSuccessResponse } from "@/utils/api-response";
 export { asyncHandler } from "@/utils/async-handler";
+export { formatZodErrors } from "@/utils/zod-error";

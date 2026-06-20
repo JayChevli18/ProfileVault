@@ -5,6 +5,8 @@ export interface IUser {
   password: string;
   isActive: boolean;
   lastLoginAt: Date | null;
+  tokenVersion: number;
+  refreshTokenHash: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

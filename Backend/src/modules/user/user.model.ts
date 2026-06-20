@@ -26,12 +26,22 @@ const userSchema = new Schema<IUserDocument>(
       type: Date,
       default: null,
     },
+    tokenVersion: {
+      type: Number,
+      default: 0,
+    },
+    refreshTokenHash: {
+      type: String,
+      default: null,
+      select: false,
+    },
   },
   {
     timestamps: true,
     toJSON: {
       transform(_doc, ret: Record<string, unknown>) {
         delete ret.password;
+        delete ret.refreshTokenHash;
         return ret;
       },
     },
