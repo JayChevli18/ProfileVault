@@ -6,8 +6,9 @@
     "module": "esnext",
     "types": ["vite/client"],
     "skipLibCheck": true,
+    "ignoreDeprecations": "5.0",
 
-    "baseUrl": ".",
+    // "baseUrl": "http://localhost:5000",
     "paths": {
       "@/*": ["./src/*"]
     },
