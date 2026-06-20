@@ -38,6 +38,7 @@ export async function generateProfileDocx(profile: ProfileResponse): Promise<Buf
           createFieldParagraph("Email", profile.email),
           createFieldParagraph("Mobile", profile.mobile),
           createFieldParagraph("Address", profile.address),
+          createFieldParagraph("Documents", profile.documents.map((document) => `\n-File Name: ${document.originalName}\nFile URL: ${document.url}`).join("\n")),
           new Paragraph({
             children: [
               new TextRun({

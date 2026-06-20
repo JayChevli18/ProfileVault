@@ -53,3 +53,47 @@ export async function updateProfile(input: ProfileFormInput): Promise<Profile> {
 
   return response.data.data;
 }
+
+export interface UploadProgressOptions {
+  onUploadProgress?: (progress: number) => void;
+}
+
+export async function uploadProfileDocument(
+  file: File,
+  options?: UploadProgressOptions
+): Promise<Profile> {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await apiClient.post<ApiSuccessResponse<unknown>>(
+    "/api/upload",
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress: (event) => {
+        if (!options?.onUploadProgress || !event.total) {
+          return;
+        }
+
+        const progress = Math.round((event.loaded / event.total) * 100);
+        options.onUploadProgress(progress);
+      },
+    }
+  );
+
+  if (!response.data.success) {
+    throw new Error("Upload failed");
+  }
+
+  const profileResponse = await apiClient.get<ApiSuccessResponse<Profile>>(
+    "/api/profile"
+  );
+
+  if (!profileResponse.data.success || !profileResponse.data.data) {
+    throw new Error("Failed to refresh profile after upload");
+  }
+
+  return profileResponse.data.data;
+}

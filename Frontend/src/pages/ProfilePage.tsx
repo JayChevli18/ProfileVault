@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { DocumentDownloadSection } from "@/components/profile/DocumentDownloadSection";
 import { ProfileForm } from "@/components/profile/ProfileForm";
 import { ProfileSkeleton } from "@/components/profile/ProfileSkeleton";
 import { ProfileView } from "@/components/profile/ProfileView";
+import { UploadSection } from "@/components/profile/UploadSection";
 import { formatDateForInput } from "@/lib/format-date";
 import { getApiErrorMessage } from "@/types/api";
 import type { Profile } from "@/types/profile";
@@ -84,6 +86,9 @@ export function ProfilePage() {
           onSuccess={() => setMode("view")}
         />
       ) : null}
+
+      {profile ? <UploadSection profile={profile} /> : null}
+      {profile ? <DocumentDownloadSection /> : null}
     </div>
   );
 }
