@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs/
+*.log
+
+# Uploads (local storage)
+Backend/uploads/*
+!Backend/uploads/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Secrets (do not commit)
+temp.txt
+
+# Build
+dist/
+Backend/dist/
