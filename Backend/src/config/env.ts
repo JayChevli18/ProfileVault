@@ -7,7 +7,8 @@ export interface EnvConfig {
   nodeEnv: string;
   mongodbUri: string;
   jwtSecret: string;
-  jwtExpiresIn: string;
+  jwtAccessExpiresIn: string;
+  jwtRefreshExpiresIn: string;
   useBlobStorage: boolean;
   blobReadWriteToken: string;
   clientUrl: string;
@@ -40,7 +41,8 @@ export const env: EnvConfig = {
   nodeEnv: process.env.NODE_ENV || "development",
   mongodbUri: process.env.MONGODB_URI || "",
   jwtSecret: process.env.JWT_SECRET || "",
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
+  jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN || "15m",
+  jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || "7d",
   useBlobStorage,
   blobReadWriteToken: process.env.BLOB_READ_WRITE_TOKEN || "",
   clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
