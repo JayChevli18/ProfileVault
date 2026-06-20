@@ -45,7 +45,7 @@ export const env: EnvConfig = {
   jwtRefreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || "7d",
   useBlobStorage,
   blobReadWriteToken: process.env.BLOB_READ_WRITE_TOKEN || "",
-  clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
+  clientUrl: process.env.CLIENT_URL || "http://localhost:3002",
   uploadsDir: "uploads",
   logsDir: "logs",
 };
