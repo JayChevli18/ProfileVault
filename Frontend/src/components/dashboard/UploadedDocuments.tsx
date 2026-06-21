@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { formatDateTime } from "@/lib/format-date";
 import { formatFileSize } from "@/lib/file-utils";
-import type { Profile, ProfileDocument } from "@/types/profile";
+import type { ProfileDocument } from "@/types/profile";
 
 interface UploadedDocumentsProps {
   documents: ProfileDocument[];
