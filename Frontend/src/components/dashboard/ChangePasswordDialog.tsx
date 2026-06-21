@@ -2,6 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useState, type ReactNode } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +14,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { PasswordInput } from "@/components/ui/password-input";
 import { getApiErrorMessage } from "@/types/api";
+import { useAuth } from "@/providers/AuthProvider";
 import { changePassword } from "@/services/auth.service";
 import {
   changePasswordSchema,
@@ -27,6 +29,8 @@ interface ChangePasswordDialogProps {
 }
 
 export function ChangePasswordDialog({ trigger }: ChangePasswordDialogProps) {
+  const navigate = useNavigate();
+  const { clearSession } = useAuth();
   const [open, setOpen] = useState(false);
 
   const form = useForm<ChangePasswordInput>({
@@ -45,9 +49,11 @@ export function ChangePasswordDialog({ trigger }: ChangePasswordDialogProps) {
         newPassword: values.newPassword,
       }),
     onSuccess: () => {
-      toast.success("Password changed successfully");
       form.reset();
       setOpen(false);
+      clearSession();
+      toast.success("Password changed successfully. Please sign in again.");
+      navigate("/login", { replace: true });
     },
     onError: (error) => {
       toast.error(getApiErrorMessage(error, "Failed to change password"));
@@ -95,9 +101,8 @@ export function ChangePasswordDialog({ trigger }: ChangePasswordDialogProps) {
         >
           <div className="space-y-2">
             <Label htmlFor="currentPassword">Current Password</Label>
-            <Input
+            <PasswordInput
               id="currentPassword"
-              type="password"
               autoComplete="current-password"
               aria-invalid={Boolean(errors.currentPassword)}
               {...register("currentPassword")}
@@ -111,9 +116,8 @@ export function ChangePasswordDialog({ trigger }: ChangePasswordDialogProps) {
 
           <div className="space-y-2">
             <Label htmlFor="newPassword">New Password</Label>
-            <Input
+            <PasswordInput
               id="newPassword"
-              type="password"
               autoComplete="new-password"
               aria-invalid={Boolean(errors.newPassword)}
               {...register("newPassword")}
@@ -127,9 +131,8 @@ export function ChangePasswordDialog({ trigger }: ChangePasswordDialogProps) {
 
           <div className="space-y-2">
             <Label htmlFor="confirmNewPassword">Confirm New Password</Label>
-            <Input
+            <PasswordInput
               id="confirmNewPassword"
-              type="password"
               autoComplete="new-password"
               aria-invalid={Boolean(errors.confirmNewPassword)}
               {...register("confirmNewPassword")}

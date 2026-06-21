@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PasswordInput } from "@/components/ui/password-input";
 import { Label } from "@/components/ui/label";
 import { getApiErrorMessage } from "@/types/api";
 import { useAuth } from "@/providers/AuthProvider";
@@ -75,9 +76,8 @@ export function RegisterPage() {
 
         <div className="space-y-2">
           <Label htmlFor="password">Password</Label>
-          <Input
+          <PasswordInput
             id="password"
-            type="password"
             autoComplete="new-password"
             placeholder="At least 8 characters"
             aria-invalid={Boolean(errors.password)}
